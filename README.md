@@ -1,16 +1,15 @@
 # 🎬 CineInsight — AI Movie Insight Builder
 
-A Next.js application that takes an IMDb movie ID and returns AI-powered movie insights, cast details, and audience sentiment analysis.
+A Next.js application that takes an IMDb movie ID and returns movie details, cast information, and audience sentiment analysis.
 
 ## 🚀 Live Demo
-> Deploy to Vercel (see Deployment section)
+https://your-vercel-url.vercel.app
 
 ## ⚙️ Setup Instructions
 
 ### Prerequisites
 - Node.js 18+
-- OMDB API key (free): https://www.omdbapi.com/apikey.aspx
-- OpenAI API key: https://platform.openai.com/api-keys
+- OMDB API key (free): http://www.omdbapi.com/apikey.aspx
 
 ### Install & Run
 ```bash
@@ -18,7 +17,7 @@ git clone https://github.com/YOUR_USERNAME/ai-movie-insight
 cd ai-movie-insight
 npm install
 cp .env.example .env.local
-# Fill in your API keys in .env.local
+# Add your OMDB API key to .env.local
 npm run dev
 ```
 
@@ -33,12 +32,10 @@ npm test
 
 | Technology | Reason |
 |---|---|
-| **Next.js 14 (App Router)** | Full-stack JS with built-in API routes — no separate backend needed. Server components reduce client JS. |
-| **Tailwind CSS** | Utility-first, rapid styling without context switching. Tree-shaken in production. |
-| **OMDB API** | Reliable, free-tier movie data (poster, cast, plot, rating). |
-| **OpenAI GPT-3.5** | Cost-effective AI for sentiment analysis and insight generation. |
-| **Axios** | Better error handling and timeout support vs native fetch for server-side calls. |
-| **Cheerio** | Listed as a dep but OMDB covers data needs; available for review scraping extension. |
+| **Next.js 14 (App Router)** | Full-stack JS with built-in API routes — no separate backend needed |
+| **Tailwind CSS v3** | Utility-first, rapid styling, tree-shaken in production |
+| **OMDB API** | Reliable free-tier movie data — poster, cast, plot, rating |
+| **Axios** | Better error handling and timeout support for server-side API calls |
 
 ## 📁 Project Structure
 ```
@@ -48,28 +45,30 @@ src/
     layout.js            ← Root layout + metadata
     globals.css          ← Theme, animations
     api/
-      movie/route.js     ← Movie data API
-      sentiment/route.js ← AI sentiment API
+      movie/route.js     ← Fetches movie data from OMDB API
+      sentiment/route.js ← Generates sentiment analysis from IMDb rating
   components/
-    SearchForm.js        ← Input with validation
+    SearchForm.js        ← Input with IMDb ID validation
     MovieCard.js         ← Movie details display
-    CastList.js          ← Cast members
-    SentimentPanel.js    ← AI sentiment results
+    CastList.js          ← Cast members with avatars
+    SentimentPanel.js    ← Sentiment score, highlights, quotes
     LoadingSpinner.js    ← Loading state
   lib/
-    utils.js             ← Shared utilities
+    utils.js             ← Shared utility functions
   __tests__/
     utils.test.js        ← Unit tests
 ```
 
-## Assumptions
-- OMDB API used for movie data (reliable, free, no scraping needed)
-- OpenAI sentiment is AI-generated based on training knowledge (not live review scraping, which violates most sites' ToS)
-- IMDb IDs are in format tt + 7-8 digits
+## 💡 How Sentiment Works
 
-## 🌐 Deployment to Vercel
-```bash
-npm install -g vercel
-vercel
-# Follow prompts, add env vars in Vercel dashboard
-```
+Sentiment analysis is generated based on the movie's IMDb rating score:
+- **7.5+ / 10** → Positive sentiment
+- **5.5 – 7.4 / 10** → Mixed sentiment  
+- **Below 5.5 / 10** → Negative sentiment
+
+This approach requires no external AI API, keeps the app fast and free to run, and produces consistent, meaningful results.
+
+## Assumptions
+- IMDb IDs follow the format: `tt` + 7-8 digits (e.g. `tt0133093`)
+- OMDB API is used as the single data source for all movie metadata
+- Sentiment is derived from IMDb rating data rather than live review scraping
