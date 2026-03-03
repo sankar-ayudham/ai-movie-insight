@@ -78,20 +78,18 @@ export default function Home() {
 
       {/* Results */}
       {movieData && !loading && (
-        <div className="space-y-8 animate-fade-up">
-          {/* Movie info + Sentiment side by side on large screens */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div className="lg:col-span-2">
-              <MovieCard movie={movieData} />
-            </div>
-            <div>
-              <SentimentPanel data={sentimentData} loading={sentimentLoading} />
-            </div>
-          </div>
-
-          {/* Cast */}
-          <CastList cast={movieData.cast} />
-        </div>
+        <div className="animate-fade-up">
+  {/* Movie info + Sentiment side by side on large screens */}
+  <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <div className="lg:col-span-2 flex flex-col gap-8">
+      <MovieCard movie={movieData} />
+      <CastList cast={movieData.cast} />
+    </div>
+    <div>
+      <SentimentPanel data={sentimentData} loading={sentimentLoading} />
+    </div>
+  </div>
+</div>
       )}
 
       {/* Footer */}
