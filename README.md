@@ -3,7 +3,7 @@
 A Next.js application that takes an IMDb movie ID and returns movie details, cast information, and audience sentiment analysis.
 
 ## 🚀 Live Demo
-https://your-vercel-url.vercel.app
+https://ai-movie-insight-blond.vercel.app/
 
 ## ⚙️ Setup Instructions
 
